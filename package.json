@@ -1,0 +1,25 @@
+{
+  "name": "bizmanagecrm",
+  "version": "1.0.0",
+  "description": "fullstack app with Angular, Nodejs, Express, MongoDB",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index"
+  },
+  "keywords": [
+    "express",
+    "angular",
+    "node.js"
+  ],
+  "author": "Ihar Tsitou",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "express": "^4.21.0",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.5"
+  }
+}
