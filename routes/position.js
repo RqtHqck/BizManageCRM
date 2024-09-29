@@ -3,7 +3,7 @@ const controller = require('../controllers/position')
 const router = express.Router()
 
 // localhost:3000/api/position
-router.get('/:category', controller.getByCategoryId)
+router.get('/:categoryId', controller.getByCategoryId)
 // localhost:3000/api/position
 router.post('/', controller.create)
 // localhost:3000/api/position
