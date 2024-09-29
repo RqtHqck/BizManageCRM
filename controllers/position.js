@@ -8,7 +8,7 @@ module.exports.getByCategoryId = async function(req, res) {
       category: req.params.categoryId, 
       user: req.user.id  // taken from request, because jwt done fn return 
     })
-    res.status(200).json(position)
+    res.status(200).json(positions)
   } catch (error) {errorHandler(error)}
 }
 
@@ -24,9 +24,14 @@ module.exports.create = async function(req, res) {
   } catch (error) {errorHandler(res, error)}
 }
 
-module.exports.update = function(req, res) {
+module.exports.update = async function(req, res) {
   try {
-    
+    const position = await Position.findOneAndUpdate({
+      _id: req.params.id},
+      {$set: req.body},  // Set another data 
+      {new: true} // Say mongoose update data and return new data
+    )
+    res.status(200).json(position)
   } catch (error) {errorHandler(res, error)}
 }
 
