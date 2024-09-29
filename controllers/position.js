@@ -12,20 +12,27 @@ module.exports.getByCategoryId = async function(req, res) {
   } catch (error) {errorHandler(error)}
 }
 
-module.exports.create = function(req, res) {
+module.exports.create = async function(req, res) {
   try {
-    
-  } catch (error) {errorHandler(error)}
+    const position = await new Position({
+      name: req.body.name,
+      cost: req.body.cost,
+      category: req.body.category,
+      user: req.user.id
+    }).save()
+    res.status(201).json(position);
+  } catch (error) {errorHandler(res, error)}
 }
 
 module.exports.update = function(req, res) {
   try {
     
-  } catch (error) {errorHandler(error)}
+  } catch (error) {errorHandler(res, error)}
 }
 
-module.exports.delete = function(req, res) {
+module.exports.delete = async function(req, res) {
   try {
-    
-  } catch (error) {errorHandler(error)}
+    await Position.remove({_id: req.params.id});
+    res.status(204).json({message: "Position removed"})
+  } catch (error) {errorHandler(res, error)}
 }
