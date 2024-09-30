@@ -13,11 +13,14 @@ const analyticsRoutes = require('./routes/analytics')
 const app = express();
 
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('MongoDB database connected'))
+  .then(() => console.log('MongoDB connected'))
   .catch(error => console.error(error))
 
-app.use(passport.initialize()) // Passport 
-require('./middleware/passport')(passport) // Passport
+// Passport 
+app.use(passport.initialize())
+require('./middleware/passport')(passport)
+
+app.use('/uploads', express.static('uploads')) // Create static folder
 app.use(require('morgan')('dev')) // Server output
 app.use(require('cors')())  // Cors attacks defend
 app.use(bodyParser.urlencoded({extended: true})) 
@@ -29,6 +32,5 @@ app.use('/api/order', orderRoutes)
 app.use('/api/category', categoryRoutes)
 app.use('/api/position', positionRoutes)
 app.use('/api/analytics', analyticsRoutes)
-
 
 module.exports = app

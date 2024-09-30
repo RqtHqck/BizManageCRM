@@ -1,10 +1,11 @@
-// File uploading management
+// File uploading with multer settings up
 const multer = require('multer')
 const moment = require('moment')  // DateNow
+const path = require('path')
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {  // Folder
-    cb(null, "../uploads/")
+    cb(null, path.join(__dirname, '..', 'uploads'));
   },
   filename(req, file, cb) {  // File
     cb(null, `${file.fieldname}-${moment().format('DDMMYYYY-HHmmss_SS')}`)
@@ -12,10 +13,11 @@ const storage = multer.diskStorage({
 })
 
 const fileFilter = (req, file, cb) => {
-  if (file.mimetype == 'image/png' || file.mimetype == 'image/jpg') {
+  const allowedTypes = ['image/png', 'image/jpg', 'image/jpeg'];
+  if (allowedTypes.includes(file.mimetype)) {
     cb(null, true)
   } else {
-    cb(null, false)
+    cb(new Error('Неверный тип файла. Разрешены только PNG и JPG.'), false);
   }
 } 
 

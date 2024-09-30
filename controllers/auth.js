@@ -36,18 +36,19 @@ module.exports.register = async function(req, res) {
     // If user with email exists
     res.status(409).json({message:'This email is already exists'})
   } else {
-    // Create and save user
-    const salt = bcrypt.genSaltSync(10)
-    const password = req.body.password
-    const user = new User({
-      email: req.body.email,
-      password: bcrypt.hashSync(password, salt)
-    })
     try {
+      // Create and save user
+      const salt = await bcrypt.genSaltSync(10)
+      const password = req.body.password
+      const user = new User({
+        email: req.body.email,
+        password: bcrypt.hashSync(password, salt)
+      })
+
       await user.save()
       res.status(201).json(user)
     } catch(error) {
       errorHandler(res, error)
-    }
+    }    
   }
 }
